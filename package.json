@@ -1,8 +1,7 @@
 {
-  "name": "reactjs-tsdk-template",
+  "name": "shop-app",
   "private": true,
   "version": "0.0.1",
-  "homepage": "https://telegram-mini-apps.github.io/reactjs-tsdk-template",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
