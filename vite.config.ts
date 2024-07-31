@@ -3,6 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import react from '@vitejs/plugin-react-swc'
 // import basicSsl from '@vitejs/plugin-basic-ssl';
 import tailwindcss from 'tailwindcss'
+import mkcert from 'vite-plugin-mkcert'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,6 +18,7 @@ export default defineConfig({
 		// Allows using self-signed certificates to run the dev server using HTTPS.
 		// https://www.npmjs.com/package/@vitejs/plugin-basic-ssl
 		// basicSsl(),
+		mkcert(),
 	],
 	css: {
 		postcss: {
@@ -25,7 +27,7 @@ export default defineConfig({
 	},
 	publicDir: './public',
 	server: {
-		// Exposes your dev server and makes it accessible for the devices in the same network.
-		host: true,
+		https: {},
+		host: 'xing.me',
 	},
 })

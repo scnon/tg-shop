@@ -1,0 +1,5 @@
+:root {
+    --adm-color-background: var(--tg-theme-bg-color);
+    /* --adm-border-color: var(--tg-theme-section-separator-color); */
+    --adm-border-color: white
+}

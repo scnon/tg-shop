@@ -4,6 +4,7 @@ import { SideBar } from 'antd-mobile'
 import { useEffect, useRef, useState } from 'react'
 import ProductItem from '../ProductItem/ProductItem'
 import LoadWidget from '../LoadWidget'
+import './StoreMenu.css'
 
 const items = [
 	{ key: '1', title: '第一项', text: 'lorem.generateParagraphs(8)' },
@@ -55,23 +56,35 @@ export default function ShopMenu({ id }: { id: string }) {
 	}
 
 	return (
-		<div className='flex-1 flex overflow-hidden'>
-			<div>
+		<div className='flex overflow-hidden h-screen'>
+			<div className='sider-bar'>
 				<LoadWidget error={error} loading={loading}>
-					<SideBar activeKey={tabIdx?.toString()} onChange={onTabChange}>
+					<SideBar
+						activeKey={tabIdx?.toString()}
+						onChange={onTabChange}
+						style={{
+							'--background-color': 'var(--tg-theme-bg-color)',
+						}}
+					>
 						{data?.map(item => (
 							<SideBar.Item key={item.id} title={item.name}></SideBar.Item>
 						))}
 					</SideBar>
 				</LoadWidget>
 			</div>
-			<div className='flex-1 overflow-y-auto' ref={mainElementRef}>
+			<div
+				className='flex-1 overflow-y-auto list-view'
+				style={{
+					backgroundColor: 'var(--tg-theme-secondary-bg-color)',
+				}}
+				ref={mainElementRef}
+			>
 				<LoadWidget error={error} loading={loading}>
 					{data?.map(item => (
 						<div key={item.id}>
 							<div
 								id={`anchor-${item.id}`}
-								className='ml-4 mb-2 text-lg font-bold'
+								className='m-2 text-lg font-bold'
 							>
 								{item.name}
 							</div>

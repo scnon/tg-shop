@@ -1,24 +1,22 @@
 import { getStoreList } from '@/apis/store'
-import type { IStoreInfo } from '@/apis/store'
+import LoadWidget from '@/components/LoadWidget'
 import ShopItem from '@/components/StoreItem/StoreItem'
-import { useEffect, useState, type FC } from 'react'
+import { useRequest } from 'ahooks'
 
-export const IndexPage: FC = () => {
-	const [shopList, setShopList] = useState<IStoreInfo[]>([])
-
-	useEffect(() => {
-		getStoreList({ lng: 0, lat: 0, kw: '', shop_id: 0 }).then(res => {
-			setShopList(res)
-		})
-	}, [])
+export const IndexPage = () => {
+	const { data, error, loading } = useRequest(() =>
+		getStoreList({ lng: 0, lat: 0, kw: '', shop_id: 0 })
+	)
 
 	return (
-		<div>
-			<div>
-				{shopList.map((shop, index) => (
-					<ShopItem key={index} info={shop} />
-				))}
-			</div>
+		<div className='primary'>
+			<LoadWidget loading={loading} error={error}>
+				<div className='space-y-2'>
+					{data?.map((shop, index) => (
+						<ShopItem key={index} info={shop} />
+					))}
+				</div>
+			</LoadWidget>
 		</div>
 	)
 }
