@@ -6,7 +6,7 @@ export default function ShopInfo({ id }: { id: string }) {
 	const { data, error, loading } = useRequest(() => getStoreDetail(id))
 
 	return (
-		<div className='h-40'>
+		<div className='h-40 primary'>
 			<LoadWidget error={error} loading={loading}>
 				<img src={data?.image} className='h-20 w-full' />
 				<div className='flex mx-2 mt-2'>

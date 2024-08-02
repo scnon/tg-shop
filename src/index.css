@@ -5,16 +5,41 @@
 body {
   padding: 0;
   margin: 0;
-  color: var(--tg-theme-text-color);
-  background-color: var(--tg-theme-bg-color);
-
   user-select: none;
 
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  --adm-color-primary: var(--tg-theme-button-color);
+  --bg-color: var(--tg-theme-bg-color);
+  --text-color: var(--tg-theme-text-color);
+  --secondary-color: var(--tg-theme-secondary-bg-color);
+  --hint-color: var(--tg-theme-hint-color);
+
+  color: var(--text-color);
+  background-color: var(--secondary-color);
 }
 
-body::-webkit-scrollbar,html::-webkit-scrollbar {
-  display: none;
+.hide-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* 隐藏滚动条但保留滚动功能 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
 
+button {
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+}
+
+.hint {
+  color: var(--hint-color);
+}
+
+.primary {
+  background-color: var(--bg-color);
+}
+
+.secondary {
+  background-color: var(--secondary-color);
+}

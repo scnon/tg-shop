@@ -2,16 +2,14 @@ import { create } from 'zustand'
 
 interface ICartStore {
 	cart: ICartItem[]
-	visible: boolean
 	price: number
 	update: (item: ICartItem) => void
 }
 
-interface ICartItem {
+export interface ICartItem {
 	id: number
 	count: number
 	price: number
-	cate: string
 	image: string
 	name: string
 	attrValue: string
@@ -19,11 +17,7 @@ interface ICartItem {
 
 export const useCartStore = create<ICartStore>(set => ({
 	cart: [],
-	visible: false,
 	price: 0,
-
-	init: () => {},
-
 	update: item => {
 		set(({ cart }) => {
 			const index = cart.findIndex(i => i.id === item.id)

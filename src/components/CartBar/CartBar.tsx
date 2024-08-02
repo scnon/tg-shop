@@ -1,26 +1,9 @@
-import { MainButton } from '@twa-dev/sdk/react'
 import { DeleteOutline } from 'antd-mobile-icons'
 import { useState } from 'react'
 
 export default function CartBar() {
-	let confirm = false
-	const [show, setShow] = useState(false)
 	const [cartBar, setCartBar] = useState(false)
-	const [btnText, setBtnText] = useState('$0.00 结算')
-
-	const doClear = () => {
-		setShow(false)
-		setCartBar(false)
-	}
-
-	const submitClick = () => {
-		if (!confirm) {
-			confirm = true
-			setBtnText('确认结算')
-		} else {
-			console.log('结算')
-		}
-	}
+	const doClear = () => {}
 
 	return (
 		<div className='fixed'>
@@ -47,7 +30,6 @@ export default function CartBar() {
 					></div>
 				</div>
 			)}
-			{show && <MainButton text={btnText} onClick={submitClick} />}
 		</div>
 	)
 }

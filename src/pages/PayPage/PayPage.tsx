@@ -1,9 +1,10 @@
 import { MainButton } from '@twa-dev/sdk/react'
 import { List } from 'antd-mobile'
-import './PayPage.css'
 import { useCartStore } from '../StorePage/CartStore'
 import { LocationFill } from 'antd-mobile-icons'
 import { useNavigate } from 'react-router-dom'
+import PayItem from '@/components/PayItem/PayItem'
+import { CSSProperties } from 'react'
 
 export default function PayPage() {
 	const navigate = useNavigate()
@@ -11,49 +12,43 @@ export default function PayPage() {
 	const price = useCartStore(state => state.price)
 
 	return (
-		<div className=''>
+		<div
+			className='root h-screen'
+			style={
+				{
+					backgroundColor: 'var(--secondary-color)',
+					'--adm-color-background': 'var(--bg-color)',
+				} as CSSProperties
+			}
+		>
 			<List
 				style={{
-					'--active-background-color': 'var(--tg-theme-secondary-bg-color)',
+					'--border-top': '6px solid var(--secondary-color)',
+					'--active-background-color': 'var(--bg-color)',
 					'--border-bottom':
 						'1px solid var(--tg-theme-section-separator-color)',
 					'--border-inner': '1px solid var(--tg-theme-section-separator-color)',
 				}}
 			>
-				<List.Item prefix={<LocationFill />} onClick={() => navigate('/address')}>
+				<List.Item
+					prefix={<LocationFill fontSize={24} />}
+					onClick={() => navigate('/address')}
+					description={'x, 13112344321'}
+				>
 					Pandda Bank{' '}
 				</List.Item>
 				<List.Item extra={'汇旺支付'} onClick={() => {}}>
 					付款方式
 				</List.Item>
 			</List>
-			<div className='space-y-2 mx-3 mt-2'>
+			<div className='space-y-2 mx-2 mt-2 pb-2'>
 				{cart.map((item, index) => {
-					return (
-						<div
-							key={index}
-							className='flex rounded-md overflow-hidden'
-							style={{
-								backgroundColor: 'var(--tg-theme-secondary-bg-color)',
-							}}
-						>
-							<img src={item.image} className='w-20 h-20 rounded-r-md' />
-							<div className='mx-2 flex flex-col justify-between flex-1'>
-								<span className='text-sm mt-1'>{item.name}</span>
-								<div className='flex justify-between items-baseline'>
-									<span className='text-md'>x{item.count}</span>
-									<span className='text-lg text-red-400'>
-										${item.price.toFixed(2)}
-									</span>
-								</div>
-							</div>
-						</div>
-					)
+					return <PayItem key={index} item={item} />
 				})}
 			</div>
 			<List
 				style={{
-					'--active-background-color': 'var(--tg-theme-secondary-bg-color)',
+					'--border-top': 'none',
 					'--border-bottom':
 						'1px solid var(--tg-theme-section-separator-color)',
 					'--border-inner': '1px solid var(--tg-theme-section-separator-color)',
@@ -64,9 +59,9 @@ export default function PayPage() {
 				<List.Item extra={'$ 0.00'}>优惠券</List.Item>
 			</List>
 			<div
-				className='fixed bottom-0 w-full rounded-t-lg p-2 flex justify-between'
+				className='fixed bottom-0 w-full rounded-t-lg p-2 flex justify-between overflow-hidden shadow-lg'
 				style={{
-					backgroundColor: 'var(--tg-theme-secondary-bg-color)',
+					backgroundColor: 'var(--bg-color)',
 				}}
 			>
 				<span className='font-bold text-lg'>总计</span>

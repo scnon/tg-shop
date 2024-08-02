@@ -1,8 +1,0 @@
-
-.list-view::-webkit-scrollbar {
-    display: none;
-}
-
-.sider-bar {
-    --adm-color-background: var(--tg-theme-secondary-bg-color);
-}

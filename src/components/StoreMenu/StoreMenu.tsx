@@ -4,7 +4,6 @@ import { SideBar } from 'antd-mobile'
 import { useEffect, useRef, useState } from 'react'
 import ProductItem from '../ProductItem/ProductItem'
 import LoadWidget from '../LoadWidget'
-import './StoreMenu.css'
 
 export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boolean }) {
 	const { data, error, loading } = useRequest(() => getStoreMenu(id))
@@ -18,7 +17,6 @@ export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boo
 				const element = document.getElementById(`anchor-${idx}`)
 				if (!element) continue
 				const rect = element.getBoundingClientRect()
-				console.log(idx, rect)
 				if (rect.top <= 164) {
 					currentKey = idx
 				} else {
@@ -51,25 +49,36 @@ export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boo
 
 	return (
 		<div className='flex overflow-hidden h-screen'>
-			<div className='sider-bar'>
+			<div
+				className='primary'
+				style={
+					{
+						'--adm-color-background': 'var(--secondary-color)',
+					} as React.CSSProperties
+				}
+			>
 				<LoadWidget error={error} loading={loading}>
 					<SideBar
 						activeKey={tabIdx}
 						onChange={onTabChange}
 						style={{
-							'--background-color': 'var(--tg-theme-bg-color)',
+							'--background-color': 'var(--bg-color)',
 						}}
 					>
-						{data?.map(item => (
-							<SideBar.Item key={item.id} title={item.name}></SideBar.Item>
+						{data?.map((item, idx) => (
+							<SideBar.Item
+								className='font-bold'
+								key={idx}
+								title={item.name}
+							></SideBar.Item>
 						))}
 					</SideBar>
 				</LoadWidget>
 			</div>
 			<div
-				className={`flex-1 list-view ${canScroll ? 'overflow-y-auto' : ''}`}
+				className={`flex-1 hide-scrollbar ${canScroll ? 'overflow-y-auto' : ''}`}
 				style={{
-					backgroundColor: 'var(--tg-theme-secondary-bg-color)',
+					backgroundColor: 'var(--secondary-color)',
 				}}
 				ref={mainElementRef}
 			>
@@ -87,7 +96,7 @@ export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boo
 						</div>
 					))}
 				</LoadWidget>
-				<div className='h-24'></div>
+				<div className='h-6'></div>
 			</div>
 		</div>
 	)

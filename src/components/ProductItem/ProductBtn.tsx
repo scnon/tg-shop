@@ -9,7 +9,6 @@ export default function ProductBtn({ info }: { info: IProduct }) {
 	const update = useCartStore(state => state.update)
 
 	const onClick = useCallback(() => {
-		console.log('ProductBtn onClick')
 		bus.emit('show', <ProductAttrPopup info={info} />)
 	}, [])
 
@@ -23,7 +22,6 @@ export default function ProductBtn({ info }: { info: IProduct }) {
 			count: newVal,
 			attrValue: '',
 			price: info.price,
-			cate: '0',
 			image: info.image,
 			name: info.storeName,
 		})
@@ -31,24 +29,27 @@ export default function ProductBtn({ info }: { info: IProduct }) {
 
 	if (info.productAttr.length > 1) {
 		return (
-			<button
-				onClick={onClick}
-				className='flex items-center justify-center h-7 rounded-md px-2 font-bold '
-			>
-				选规格
-			</button>
+			<div className='relative'>
+				<button
+					onClick={onClick}
+					className='h-6 rounded-md px-2 font-bold leading-6 font-sans'
+				>
+					选规格
+				</button>
+				<div className=' absolute top-0 right-0 w-4 h-4 rounded-full bg-red-500 -translate-y-1 translate-x-1 text-center text-white leading-4'>
+					1
+				</div>
+			</div>
 		)
 	}
 	return (
-		<div className='flex items-baseline text-2xl font-mono leading-3'>
+		<div className='flex items-baseline text-2xl font-sans leading-6'>
 			{count > 0 && (
-				<button onClick={() => onchange(-1)} className='w-6 h-6  rounded-full'>
+				<button onClick={() => onchange(-1)} className='w-6 h-6 rounded-full'>
 					-
 				</button>
 			)}
-			{count > 0 && (
-				<div className='w-7 h-6 text-center font-sans text-xl'>{count}</div>
-			)}
+			{count > 0 && <div className='w-7 h-6 text-center text-xl'>{count}</div>}
 			<button onClick={() => onchange(1)} className='w-6 h-6  rounded-full'>
 				+
 			</button>

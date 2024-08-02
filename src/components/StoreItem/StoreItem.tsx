@@ -4,10 +4,11 @@ import { Link } from '../Link/Link'
 export default function ShopItem({ info }: { info: IStoreInfo }) {
 	return (
 		<Link
-			className='flex mx-2 rounded-md'
+			className='flex mx-2 rounded-md shadow-md'
 			to={`/store?id=${info.id}`}
+			replace={false}
 			style={{
-				backgroundColor: 'var(--tg-theme-secondary-bg-color)',
+				backgroundColor: 'var(--bg-color)',
 			}}
 		>
 			<img
