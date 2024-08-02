@@ -2,7 +2,7 @@ import { IProduct } from '@/apis/store'
 import ProductAttrPopup from './ProductAttrPopup'
 import bus from '@/utils/bus'
 import { useCallback, useState } from 'react'
-import { useCartStore } from '@/pages/StorePage/CartStore'
+import { useCartStore } from '@/stores/CartStore'
 
 export default function ProductBtn({ info }: { info: IProduct }) {
 	const [count, setCount] = useState(0)

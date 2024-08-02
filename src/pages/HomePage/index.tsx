@@ -15,7 +15,7 @@ export default function HomePage() {
 	const loadMore = async () => {}
 
 	return (
-		<div className='primary flex-grow overflow-auto hide-scrollbar'>
+		<div className='secondary flex-grow overflow-auto hide-scrollbar'>
 			<div
 				className='h-9 px-2 text-base flex pb-3 items-center'
 				style={{
@@ -42,16 +42,6 @@ export default function HomePage() {
 			<div className='px-2 h-6 font-bold text-sm'>店铺列表</div>
 			<LoadWidget loading={loading} error={error}>
 				<div className='space-y-2'>
-					{data?.map((shop, index) => (
-						<ShopItem key={index} info={shop} />
-					))}
-				</div>
-				<div className='space-y-2 mt-2'>
-					{data?.map((shop, index) => (
-						<ShopItem key={index} info={shop} />
-					))}
-				</div>
-				<div className='space-y-2 mt-2'>
 					{data?.map((shop, index) => (
 						<ShopItem key={index} info={shop} />
 					))}

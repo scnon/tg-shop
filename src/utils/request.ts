@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores/UserStore'
 import axios from 'axios'
 
 const request = axios.create({
@@ -8,6 +9,10 @@ const request = axios.create({
 request.interceptors.request.use(
 	config => {
 		config.headers['tenant-id'] = '1'
+		const token = useUserStore.getState().accessToken
+		if (token) {
+			config.headers['Authorization'] = `Bearer ${token}`
+		}
 		return config
 	},
 	error => {

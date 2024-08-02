@@ -1,8 +1,16 @@
 import { Divider } from 'antd-mobile'
+import { useNavigate } from 'react-router-dom'
 
 export default function OrderItem() {
+	const navigate = useNavigate()
+
+	const onClick = () => {
+		navigate('/orderDetails?id=123')
+	}
+
 	return (
 		<div
+			onClick={onClick}
 			className='p-3 mx-2 rounded-md shadow-md mt-2 text-sm'
 			style={{
 				backgroundColor: 'var(--bg-color)',

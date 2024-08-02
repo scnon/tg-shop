@@ -1,6 +1,6 @@
 import { MainButton } from '@twa-dev/sdk/react'
 import { List } from 'antd-mobile'
-import { useCartStore } from '../StorePage/CartStore'
+import { useCartStore } from '../../stores/CartStore'
 import { LocationFill } from 'antd-mobile-icons'
 import { useNavigate } from 'react-router-dom'
 import PayItem from '@/components/PayItem/PayItem'

@@ -19,6 +19,6 @@ export interface IUserInfo {
 	mobile: string
 }
 
-export const login = (data: ILoginParams) => {
-	return request.post('/member/auth/authorize-login', { params: data })
+export const login = (data: ILoginParams): Promise<ILoginResp> => {
+	return request.post('/member/auth/authorize-login', data)
 }

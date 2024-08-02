@@ -15,9 +15,12 @@ body {
   --text-color: var(--tg-theme-text-color);
   --secondary-color: var(--tg-theme-secondary-bg-color);
   --hint-color: var(--tg-theme-hint-color);
+  --button-color: var(--tg-theme-button-color);
+  --button-text-color: var(--tg-theme-button-text-color);
 
   color: var(--text-color);
   background-color: var(--secondary-color);
+  padding-bottom: var(--safe-area-inset-bottom);
 }
 
 .hide-scrollbar {
@@ -45,4 +48,9 @@ button {
 
 .secondary {
   background-color: var(--secondary-color);
+}
+
+.button {
+  background-color: var(--button-color);
+  color: var(--button-text-color);
 }

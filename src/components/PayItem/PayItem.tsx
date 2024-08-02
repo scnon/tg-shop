@@ -1,4 +1,4 @@
-import { ICartItem } from '@/pages/StorePage/CartStore'
+import { ICartItem } from '@/stores/CartStore'
 
 export default function PayItem({ item }: { item: ICartItem }) {
 	return (
