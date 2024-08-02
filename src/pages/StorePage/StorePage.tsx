@@ -97,23 +97,27 @@ export default function StorePage() {
 	}
 
 	return (
-		<div ref={mainScroll} className='flex flex-col'>
-			<StoreInfo id={id} />
-			<StoreMenu canScroll={canScroll} id={id} />
-			<Popup
-				visible={visible}
-				showCloseButton
-				bodyStyle={{
-					borderTopLeftRadius: '1rem',
-					borderTopRightRadius: '1rem',
-					backgroundColor: 'var(--bg-color)',
-				}}
-				onClose={closePopup}
-				onMaskClick={closePopup}
-			>
-				{popContent}
-			</Popup>
-			{show && <MainButton text={text} onClick={onMainButtonClick}></MainButton>}
+		<div ref={mainScroll} className='flex flex-col h-screen'>
+			<div className='overflow-y-auto hide-scrollbar'>
+				<StoreInfo id={id} />
+				<StoreMenu canScroll={canScroll} id={id} />
+				<Popup
+					visible={visible}
+					showCloseButton
+					bodyStyle={{
+						borderTopLeftRadius: '1rem',
+						borderTopRightRadius: '1rem',
+						backgroundColor: 'var(--bg-color)',
+					}}
+					onClose={closePopup}
+					onMaskClick={closePopup}
+				>
+					{popContent}
+				</Popup>
+				{show && (
+					<MainButton text={text} onClick={onMainButtonClick}></MainButton>
+				)}
+			</div>
 		</div>
 	)
 }
