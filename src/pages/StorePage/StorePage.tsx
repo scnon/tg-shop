@@ -17,7 +17,7 @@ export default function StorePage() {
 	const [show, setShow] = useState(false)
 	const navigate = useNavigate()
 	const mainScroll = useRef<HTMLDivElement>(null)
-	const [canScroll, setCanScroll] = useState(true)
+	const [canScroll] = useState(true)
 
 	const closePopup = useCallback(() => {
 		setVisible(false)

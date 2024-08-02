@@ -7,7 +7,7 @@ import { DownFill, LocationFill } from 'antd-mobile-icons'
 import { useState } from 'react'
 
 export default function HomePage() {
-	const [hasMore, setHasMore] = useState(false)
+	const [hasMore] = useState(false)
 	const { data, error, loading } = useRequest(() =>
 		getStoreList({ lng: 0, lat: 0, kw: '', shop_id: 0 })
 	)

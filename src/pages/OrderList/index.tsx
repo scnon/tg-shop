@@ -3,10 +3,8 @@ import { InfiniteScroll, List, Tabs } from 'antd-mobile'
 import { useState } from 'react'
 
 export default function OrderListPage() {
-	const [hasMore, setHasMore] = useState(false)
-	const [orderList, setOrderList] = useState<number[]>(
-		Array.from({ length: 10 }, (_, i) => i)
-	)
+	const [hasMore] = useState(false)
+	const [orderList] = useState<number[]>(Array.from({ length: 10 }, (_, i) => i))
 
 	const onTabChange = (key: string) => {
 		console.log(key)

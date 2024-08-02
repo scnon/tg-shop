@@ -2,7 +2,7 @@ import { DeleteOutline } from 'antd-mobile-icons'
 import { useState } from 'react'
 
 export default function CartBar() {
-	const [cartBar, setCartBar] = useState(false)
+	const [cartBar] = useState(false)
 	const doClear = () => {}
 
 	return (
