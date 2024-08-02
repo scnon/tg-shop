@@ -2,35 +2,103 @@ import CartBar from '@/components/CartBar/CartBar'
 import StoreInfo from '@/components/StoreInfo/StoreInfo'
 import StoreMenu from '@/components/StoreMenu/StoreMenu'
 import { Popup } from 'antd-mobile'
-import { useCartStore, usePopupStore } from './CartStore'
-import { MainButton } from '@twa-dev/sdk/react'
-import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import bus from '@/utils/bus'
+import { useCartStore } from './CartStore'
+import { useNavigate } from 'react-router-dom'
+import { useThrottleFn } from 'ahooks'
 
 export default function StorePage() {
-	const id = new URLSearchParams(window.location.search).get('id') || ''
-	const visible = usePopupStore(state => state.visiable)
-	const popContent = usePopupStore(state => state.content)
-	const doClosePopup = usePopupStore(state => state.close)
-	const mainVisible = useCartStore(state => state.visible)
+	const [id, setId] = useState('')
+	const [popContent, setPopContent] = useState<ReactElement | null>(null)
+	const [visible, setVisible] = useState(false)
 	const price = useCartStore(state => state.price)
 	const navigate = useNavigate()
+	const mainScroll = useRef<HTMLDivElement>(null)
+	const [canScroll, setCanScroll] = useState(true)
 
-	const closePopup = () => {
-		doClosePopup()
+	const closePopup = useCallback(() => {
+		setVisible(false)
+		updateMainButton()
+	}, [visible])
 
-		if (mainVisible) {
-			WebApp.MainButton.setText(`$${price.toFixed(2)} 结算`)
-			WebApp.MainButton.onClick(() => navigate('/pay'))
+	const updateMainButton = useCallback(() => {
+		if (visible) {
+			setVisible(false)
+		}
+
+		if (price > 0) {
+			WebApp.MainButton.setText(`$${price.toFixed(2)} | 去结算`)
+			if (!WebApp.MainButton.isVisible) {
+				WebApp.MainButton.show()
+			}
 		} else {
 			WebApp.MainButton.hide()
 		}
+	}, [visible, price])
+
+	const { run: handleScroll } = useThrottleFn(
+		() => {
+			console.log(111111)
+		},
+		{
+			leading: true,
+			trailing: true,
+			wait: 100,
+		}
+	)
+
+	useEffect(() => {
+		updateMainButton()
+	}, [price])
+
+	useEffect(() => {
+		const mainElement = mainScroll.current
+		if (!mainElement) return
+		console.log(mainElement)
+		return () => {
+			mainElement.removeEventListener('scroll', handleScroll)
+		}
+	}, [mainScroll, handleScroll])
+
+	useEffect(() => {
+		const search = new URLSearchParams(window.location.search)
+		setId(search.get('id') || '')
+
+		WebApp.MainButton.onClick(() => {
+			if (visible) {
+				setVisible(false)
+				updateMainButton()
+			} else {
+				navigate('/pay')
+				console.log('')
+			}
+		})
+
+		bus.on('show', (show: ReactElement) => {
+			setVisible(true)
+			setPopContent(show)
+		})
+		bus.on('text', (text: string) => {
+			WebApp.MainButton.setText(text)
+		})
+		return () => {
+			setVisible(false)
+			WebApp.MainButton.hide()
+			bus.off('show')
+			bus.off('text')
+		}
+	}, [])
+
+	if (id.trim() === '') {
+		return <div>404</div>
 	}
 
 	return (
-		<div className='flex flex-col' style={{}}>
+		<div ref={mainScroll} className='flex flex-col'>
 			<StoreInfo id={id} />
-			<StoreMenu id={id} />
+			<StoreMenu canScroll={canScroll} id={id} />
 			<CartBar />
 			<Popup
 				visible={visible}
@@ -44,14 +112,6 @@ export default function StorePage() {
 			>
 				{popContent}
 			</Popup>
-			{mainVisible && (
-				<MainButton
-					text={`$${price.toFixed(2)} 结算`}
-					onClick={() => {
-						navigate('/pay')
-					}}
-				/>
-			)}
 		</div>
 	)
 }

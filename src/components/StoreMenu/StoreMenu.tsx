@@ -6,31 +6,26 @@ import ProductItem from '../ProductItem/ProductItem'
 import LoadWidget from '../LoadWidget'
 import './StoreMenu.css'
 
-const items = [
-	{ key: '1', title: '第一项', text: 'lorem.generateParagraphs(8)' },
-	{ key: '2', title: '第二项', text: 'lorem.generateParagraphs(8)' },
-	{ key: '3', title: '第三项', text: 'lorem.generateParagraphs(8)' },
-	{ key: '4', title: '第四项', text: 'lorem.generateParagraphs(8)' },
-]
-
-export default function ShopMenu({ id }: { id: string }) {
+export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boolean }) {
 	const { data, error, loading } = useRequest(() => getStoreMenu(id))
-	const [tabIdx, setTabIdx] = useState(0)
+	const [tabIdx, setTabIdx] = useState('0')
 
 	const { run: handleScroll } = useThrottleFn(
 		() => {
-			let currentKey = items[0].key
-			for (const item of items) {
-				const element = document.getElementById(`anchor-${item.key}`)
+			let currentKey = 0
+			if (data == null) return
+			for (let idx = 0; idx < data.length; idx++) {
+				const element = document.getElementById(`anchor-${idx}`)
 				if (!element) continue
 				const rect = element.getBoundingClientRect()
-				if (rect.top <= 0) {
-					currentKey = item.key
+				console.log(idx, rect)
+				if (rect.top <= 164) {
+					currentKey = idx
 				} else {
 					break
 				}
 			}
-			setTabIdx(Number(currentKey))
+			setTabIdx(currentKey.toString())
 		},
 		{
 			leading: true,
@@ -48,10 +43,9 @@ export default function ShopMenu({ id }: { id: string }) {
 		return () => {
 			mainElement.removeEventListener('scroll', handleScroll)
 		}
-	}, [])
+	}, [handleScroll])
 
 	const onTabChange = (key: string) => {
-		console.log(key)
 		document.getElementById(`anchor-${key}`)?.scrollIntoView()
 	}
 
@@ -60,7 +54,7 @@ export default function ShopMenu({ id }: { id: string }) {
 			<div className='sider-bar'>
 				<LoadWidget error={error} loading={loading}>
 					<SideBar
-						activeKey={tabIdx?.toString()}
+						activeKey={tabIdx}
 						onChange={onTabChange}
 						style={{
 							'--background-color': 'var(--tg-theme-bg-color)',
@@ -73,19 +67,16 @@ export default function ShopMenu({ id }: { id: string }) {
 				</LoadWidget>
 			</div>
 			<div
-				className='flex-1 overflow-y-auto list-view'
+				className={`flex-1 list-view ${canScroll ? 'overflow-y-auto' : ''}`}
 				style={{
 					backgroundColor: 'var(--tg-theme-secondary-bg-color)',
 				}}
 				ref={mainElementRef}
 			>
 				<LoadWidget error={error} loading={loading}>
-					{data?.map(item => (
+					{data?.map((item, idx) => (
 						<div key={item.id}>
-							<div
-								id={`anchor-${item.id}`}
-								className='m-2 text-lg font-bold'
-							>
+							<div id={`anchor-${idx}`} className='m-2 text-sm font-bold'>
 								{item.name}
 							</div>
 							<div className='space-y-2'>

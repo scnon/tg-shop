@@ -1,23 +1,5 @@
 import { create } from 'zustand'
 
-interface IPopupStore {
-	visiable: boolean
-	content: React.ReactNode
-	open: (content: React.ReactNode) => void
-	close: () => void
-}
-
-export const usePopupStore = create<IPopupStore>(set => ({
-	visiable: false,
-	content: null,
-	open: (content: React.ReactNode) => {
-		set({ visiable: true, content })
-	},
-	close: () => {
-		set({ visiable: false })
-	},
-}))
-
 interface ICartStore {
 	cart: ICartItem[]
 	visible: boolean

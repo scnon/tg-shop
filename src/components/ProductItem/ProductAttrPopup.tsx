@@ -1,10 +1,9 @@
 import { IProduct } from '@/apis/store'
-import { useCartStore, usePopupStore } from '@/pages/StorePage/CartStore'
+import { useCartStore } from '@/pages/StorePage/CartStore'
 import WebApp from '@twa-dev/sdk'
 import { CapsuleTabs } from 'antd-mobile'
 
 export default function ProductAttrPopup({ info }: { info: IProduct }) {
-	const close = usePopupStore(state => state.close)
 	const update = useCartStore(state => state.update)
 
 	WebApp.MainButton.setText('确定')
@@ -33,6 +32,9 @@ export default function ProductAttrPopup({ info }: { info: IProduct }) {
 								{attr.attrValue.map((value, index) => {
 									return (
 										<CapsuleTabs.Tab
+											style={{
+												maxWidth: '150px',
+											}}
 											key={index}
 											title={value.attr}
 										></CapsuleTabs.Tab>
