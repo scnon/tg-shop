@@ -7,7 +7,10 @@ body {
   margin: 0;
   user-select: none;
 
-  --adm-color-primary: var(--tg-theme-button-color);
+  /* 适配安全区 */
+  --safe-area-inset-bottom: calc(100vh - var(--tg-viewport-stable-height, 100vh)) --adm-color-primary:
+    var(--tg-theme-button-color);
+
   --bg-color: var(--tg-theme-bg-color);
   --text-color: var(--tg-theme-text-color);
   --secondary-color: var(--tg-theme-secondary-bg-color);
