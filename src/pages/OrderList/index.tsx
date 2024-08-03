@@ -1,16 +1,21 @@
 import OrderItem from '@/components/OrderItem'
 import { InfiniteScroll, List, Tabs } from 'antd-mobile'
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
+import { FixedSizeList as ListType } from 'react-window'
 
 export default function OrderListPage() {
 	const [hasMore] = useState(false)
-	const [orderList] = useState<number[]>(Array.from({ length: 10 }, (_, i) => i))
+	const [orderList] = useState<number[]>(Array.from({ length: 100 }, (_, i) => i))
 
 	const onTabChange = (key: string) => {
 		console.log(key)
 	}
 
 	const loadMore = async () => {}
+
+	const rowRender = ({ index, style }: { index: number; style: CSSProperties }) => {
+		return <OrderItem style={style} info={index} />
+	}
 
 	return (
 		<div className='flex-1 overflow-hidden flex flex-col'>
@@ -39,9 +44,20 @@ export default function OrderListPage() {
 						} as React.CSSProperties
 					}
 				>
-					{orderList.map(order => {
-						return <OrderItem key={order} />
-					})}
+					<ListType
+						height={500}
+						width={384}
+						itemSize={230}
+						className='hide-scrollbar secondary'
+						style={
+							{
+								'--tw-space-y-reverse': '10px',
+							} as React.CSSProperties
+						}
+						itemCount={orderList.length}
+					>
+						{rowRender}
+					</ListType>
 				</List>
 				<InfiniteScroll
 					className='hint secondary'
