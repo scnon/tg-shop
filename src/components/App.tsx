@@ -40,6 +40,7 @@ export const App: FC = () => {
 	const loginState = useUserStore(state => state.login)
 
 	useEffect(() => {
+		WebApp.expand()
 		login({ platformId: id }).then(data => {
 			loginState(data)
 		})
