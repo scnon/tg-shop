@@ -1,34 +1,58 @@
 import OrderItem from '@/components/OrderItem'
-import WebApp from '@twa-dev/sdk'
+// import { useThrottleFn } from 'ahooks'
 import { InfiniteScroll, List, Tabs } from 'antd-mobile'
-import { CSSProperties, useEffect, useRef, useState } from 'react'
-import { FixedSizeList as ListType } from 'react-window'
+import { useRef, useState } from 'react'
+// import { FixedSizeList } from 'react-window'
+
+const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time))
 
 export default function OrderListPage() {
-	const [hasMore] = useState(false)
-	const [orderList] = useState<number[]>(Array.from({ length: 100 }, (_, i) => i))
+	const [hasMore, setHasMore] = useState(true)
+	const [orderList, setOrderList] = useState<number[]>(
+		Array.from({ length: 10 }, (_, i) => i)
+	)
 	const listRef = useRef<HTMLDivElement>(null)
-	const [height, setHeight] = useState(0)
-	const [width, setWidth] = useState(0)
+	// const [height, setHeight] = useState(0)
+	// const [width, setWidth] = useState(0)
 
 	const onTabChange = (key: string) => {
 		console.log(key)
 	}
 
-	const loadMore = async () => {}
-
-	const rowRender = ({ index, style }: { index: number; style: CSSProperties }) => {
-		return <OrderItem style={style} info={index} />
+	const loadMore = async () => {
+		await sleep(1000)
+		setHasMore(true)
+		setOrderList([...orderList, ...Array.from({ length: 10 }, (_, i) => i)])
 	}
 
-	useEffect(() => {
-		console.log(WebApp.viewportHeight)
-		console.log(WebApp.viewportStableHeight)
-		if (listRef.current) {
-			setHeight(listRef.current.clientHeight)
-			setWidth(listRef.current.clientWidth)
-		}
-	}, [listRef])
+	// const rowRender = ({ index, style }: { index: number; style: CSSProperties }) => {
+	// 	return <OrderItem style={style} info={index} />
+	// }
+
+	// const { run: handleScroll } = useThrottleFn(
+	// 	() => {
+	// 		console.log('scroll')
+	// 	},
+	// 	{
+	// 		leading: true,
+	// 		trailing: true,
+	// 		wait: 100,
+	// 	}
+	// )
+
+	// useEffect(() => {
+	// 	if (listRef.current) {
+	// 		setHeight(listRef.current.clientHeight)
+	// 		setWidth(listRef.current.clientWidth)
+
+	// 		listRef.current.addEventListener('scroll', handleScroll)
+	// 	}
+	// 	return () => {
+	// 		if (listRef.current) {
+	// 			listRef.current.removeEventListener('scroll', () => {})
+	// 		}
+	// 	}
+	// }, [listRef])
 
 	return (
 		<div className='flex-1 overflow-hidden flex flex-col'>
@@ -49,6 +73,15 @@ export default function OrderListPage() {
 				<Tabs.Tab title='已完成' key='3'></Tabs.Tab>
 			</Tabs>
 			<div ref={listRef} className='flex-1 overflow-y-auto hide-scrollbar'>
+				{/* <FixedSizeList
+					height={height}
+					width={width}
+					itemSize={230}
+					className='hide-scrollbar secondary'
+					itemCount={orderList.length}
+				>
+					{rowRender}
+				</FixedSizeList> */}
 				<List
 					style={
 						{
@@ -57,25 +90,14 @@ export default function OrderListPage() {
 						} as React.CSSProperties
 					}
 				>
-					<ListType
-						height={height}
-						width={width}
-						itemSize={230}
-						className='hide-scrollbar secondary'
-						style={
-							{
-								'--tw-space-y-reverse': '10px',
-							} as React.CSSProperties
-						}
-						itemCount={orderList.length}
-					>
-						{rowRender}
-					</ListType>
+					{orderList.map((item, index) => {
+						return <OrderItem key={index} info={item} />
+					})}
 				</List>
 				<InfiniteScroll
 					className='hint secondary'
-					loadMore={loadMore}
 					hasMore={hasMore}
+					loadMore={loadMore}
 				/>
 			</div>
 		</div>
