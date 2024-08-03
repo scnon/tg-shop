@@ -1,6 +1,6 @@
 import { getStoreList } from '@/apis/store'
 import LoadWidget from '@/components/LoadWidget'
-import ShopItem from '@/components/StoreItem/StoreItem'
+import ShopItem, { ShopItemLoading } from '@/components/StoreItem/StoreItem'
 import { useRequest } from 'ahooks'
 import { InfiniteScroll, Swiper } from 'antd-mobile'
 import { DownFill, LocationFill } from 'antd-mobile-icons'
@@ -15,7 +15,11 @@ export default function HomePage() {
 	const loadMore = async () => {}
 
 	return (
-		<div className='secondary flex-grow overflow-auto hide-scrollbar'>
+		<div
+			className={`secondary flex-grow ${
+				loading ? 'overflow-hidden' : 'overflow-auto'
+			} hide-scrollbar`}
+		>
 			<div
 				className='h-9 px-2 text-base flex pb-3 items-center'
 				style={{
@@ -40,14 +44,21 @@ export default function HomePage() {
 				</Swiper>
 			</div>
 			<div className='px-2 h-6 font-bold text-sm'>店铺列表</div>
-			<LoadWidget loading={loading} error={error}>
+			<LoadWidget
+				loading={loading}
+				error={error}
+				list
+				loadingNode={<ShopItemLoading />}
+			>
 				<div className='space-y-2'>
 					{data?.map((shop, index) => (
 						<ShopItem key={index} info={shop} />
 					))}
 				</div>
 			</LoadWidget>
-			<InfiniteScroll className='hint' loadMore={loadMore} hasMore={hasMore} />
+			{!loading && (
+				<InfiniteScroll className='hint' loadMore={loadMore} hasMore={hasMore} />
+			)}
 		</div>
 	)
 }

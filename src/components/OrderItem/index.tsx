@@ -8,10 +8,15 @@ export default function OrderItem() {
 		navigate('/orderDetails?id=123')
 	}
 
+	const oneMoreClick = (e: React.MouseEvent) => {
+		console.log('再来一单')
+		e.stopPropagation()
+	}
+
 	return (
 		<div
 			onClick={onClick}
-			className='p-3 mx-2 rounded-md shadow-md mt-2 text-sm'
+			className='p-3 m-2 rounded-md shadow-md text-sm'
 			style={{
 				backgroundColor: 'var(--bg-color)',
 			}}
@@ -44,7 +49,9 @@ export default function OrderItem() {
 				<div className='font-bold'>总计: $12.33</div>
 			</div>
 			<div className='flex justify-end mt-2'>
-				<button className='h-8 px-3 rounded-full'>再来一单</button>
+				<button className='h-8 px-3 rounded-full' onClick={oneMoreClick}>
+					再来一单
+				</button>
 			</div>
 		</div>
 	)

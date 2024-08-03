@@ -1,6 +1,6 @@
 import type { IStoreInfo } from '@/apis/store'
 import { Link } from '../Link/Link'
-import { Tag } from 'antd-mobile'
+import { Skeleton, Tag } from 'antd-mobile'
 import { StarFill } from 'antd-mobile-icons'
 
 export default function ShopItem({ info }: { info: IStoreInfo }) {
@@ -28,5 +28,22 @@ export default function ShopItem({ info }: { info: IStoreInfo }) {
 				<div className='mt-1 text-base'>{info.address}</div>
 			</div>
 		</Link>
+	)
+}
+
+export const ShopItemLoading = () => {
+	return (
+		<div className='flex mx-2 rounded-md'>
+			<Skeleton className='rounded-md h-28 w-28' animated></Skeleton>
+			<div className='ml-2 flex flex-col justify-between'>
+				<Skeleton
+					animated
+					className='text-base font-bold h-6 w-40 rounded-md'
+				></Skeleton>
+				<Skeleton animated className='hint h-4 w-32 rounded-md'></Skeleton>
+				<Skeleton animated className='mt-1 h-5 flex w-20 rounded-md'></Skeleton>
+				<Skeleton animated className='mt-1 h-6 w-52 rounded-md'></Skeleton>
+			</div>
+		</div>
 	)
 }

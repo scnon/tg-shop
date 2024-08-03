@@ -25,7 +25,6 @@ export const IndexPage = () => {
 	const onTabChange = (key: string) => {
 		navigate(key)
 	}
-	console.log(tabIdx)
 
 	return (
 		<div className='primary h-screen flex flex-col'>

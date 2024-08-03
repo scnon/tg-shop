@@ -3,6 +3,7 @@ import ProductAttrPopup from './ProductAttrPopup'
 import bus from '@/utils/bus'
 import { useCallback, useState } from 'react'
 import { useCartStore } from '@/stores/CartStore'
+import { AddOutline, MinusOutline } from 'antd-mobile-icons'
 
 export default function ProductBtn({ info }: { info: IProduct }) {
 	const [count, setCount] = useState(0)
@@ -43,15 +44,21 @@ export default function ProductBtn({ info }: { info: IProduct }) {
 		)
 	}
 	return (
-		<div className='flex items-baseline text-2xl font-sans leading-6'>
+		<div className='flex items-baseline text-2xl font-sans'>
 			{count > 0 && (
-				<button onClick={() => onchange(-1)} className='w-6 h-6 rounded-full'>
-					-
+				<button
+					onClick={() => onchange(-1)}
+					className='w-6 h-6 rounded-full flex justify-center items-center'
+				>
+					<MinusOutline fontSize={18} />
 				</button>
 			)}
 			{count > 0 && <div className='w-7 h-6 text-center text-xl'>{count}</div>}
-			<button onClick={() => onchange(1)} className='w-6 h-6  rounded-full'>
-				+
+			<button
+				onClick={() => onchange(1)}
+				className='w-6 h-6  rounded-full flex items-center justify-center'
+			>
+				<AddOutline fontSize={18} />
 			</button>
 		</div>
 	)

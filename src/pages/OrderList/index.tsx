@@ -32,7 +32,6 @@ export default function OrderListPage() {
 			</Tabs>
 			<div className='flex-1 overflow-y-auto hide-scrollbar'>
 				<List
-					className=''
 					style={
 						{
 							'--adm-color-background': 'var(--secondary-color)',
@@ -44,7 +43,11 @@ export default function OrderListPage() {
 						return <OrderItem key={order} />
 					})}
 				</List>
-				<InfiniteScroll className='hint' loadMore={loadMore} hasMore={hasMore} />
+				<InfiniteScroll
+					className='hint secondary'
+					loadMore={loadMore}
+					hasMore={hasMore}
+				/>
 			</div>
 		</div>
 	)

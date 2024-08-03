@@ -53,11 +53,13 @@ export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boo
 				className='primary'
 				style={
 					{
+						width: '105px',
+						'--width': '64px',
 						'--adm-color-background': 'var(--secondary-color)',
 					} as React.CSSProperties
 				}
 			>
-				<LoadWidget error={error} loading={loading}>
+				<LoadWidget error={error} loading={loading} list height='h-10'>
 					<SideBar
 						activeKey={tabIdx}
 						onChange={onTabChange}
@@ -76,13 +78,15 @@ export default function ShopMenu({ id, canScroll }: { id: string; canScroll: boo
 				</LoadWidget>
 			</div>
 			<div
-				className={`flex-1 hide-scrollbar ${canScroll ? 'overflow-y-auto' : ''}`}
+				className={`flex-1 hide-scrollbar ${
+					canScroll && !loading ? 'overflow-y-auto' : ''
+				}`}
 				style={{
 					backgroundColor: 'var(--secondary-color)',
 				}}
 				ref={mainElementRef}
 			>
-				<LoadWidget error={error} loading={loading}>
+				<LoadWidget error={error} loading={loading} list>
 					{data?.map((item, idx) => (
 						<div key={item.id}>
 							<div id={`anchor-${idx}`} className='m-2 text-sm font-bold'>
