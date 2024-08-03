@@ -8,8 +8,9 @@ body {
   user-select: none;
 
   /* 适配安全区 */
-  --safe-area-inset-bottom: calc(100vh - var(--tg-viewport-stable-height, 100vh)) --adm-color-primary:
-    var(--tg-theme-button-color);
+  --safe-area-inset-bottom: calc(100vh - var(--tg-viewport-stable-height, 100vh));
+
+  --adm-color-primary: var(--tg-theme-button-color);
 
   --bg-color: var(--tg-theme-bg-color);
   --text-color: var(--tg-theme-text-color);
