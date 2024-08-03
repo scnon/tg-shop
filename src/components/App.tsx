@@ -33,7 +33,7 @@ function BackButtonManipulator() {
 }
 
 export const App: FC = () => {
-	const id = WebApp.initDataUnsafe.user?.id
+	const id = WebApp.initDataUnsafe.user?.id ?? 5902448339
 	if (!id) {
 		return <div>非 Telegram 环境</div>
 	}

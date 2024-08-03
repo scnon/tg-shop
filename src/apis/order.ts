@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { IStoreInfo } from './store'
 
 export interface IOrderParams {
 	deskNumber: string
@@ -29,6 +30,21 @@ export interface IOrderListReq {
 	type: number
 }
 
-export const getOrderList = (params: IOrderListReq) => {
+export interface IOrderListItem {
+	id: number
+	shop: IStoreInfo
+	status: number
+	createTime: number
+	getTime: number
+	payPrice: number
+	cartInfo: {
+		id: number
+		image: string
+		title: string
+		spec: string
+	}[]
+}
+
+export const getOrderList = (params: IOrderListReq): Promise<IOrderListItem[]> => {
 	return request.get('/order/list', { params })
 }
